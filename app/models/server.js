@@ -31,17 +31,11 @@ class Server {
     // cors
     this._app.use(cors())
 
-    // Comprension de gzip
-    // this._app.use(compression());
-
     // lectura y parseo del body
     this._app.use(express.json())
 
     // Carpeta publica
     this._app.use(express.static('public'))
-    /* this.app.get('*', (req, res) => {
-            res.sendFile( __dirname + '/public/404.html');
-        }) */
   }
 
   routes () {
