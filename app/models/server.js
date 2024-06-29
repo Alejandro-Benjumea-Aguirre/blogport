@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 
-const db = require('../../config/configDB')
+const database = require('../../config/configDB')
 
 class Server {
   _app
@@ -16,15 +16,6 @@ class Server {
 
     // Definir mis rutas
     this.routes()
-  }
-
-  async dbConecction () {
-    try {
-      await db.authenticate()
-      console.log('Database Online')
-    } catch (error) {
-      throw new Error(error)
-    }
   }
 
   middlewares () {
@@ -46,6 +37,13 @@ class Server {
     this._app.listen(this._port, () => {
       console.log('Servidor corriendo en puerto ' + this._port)
     })
+  }
+
+  sigint () {
+    process.on('SIGINT', async () => {
+      await database.close();
+      process.exit(0);
+    });
   }
 }
 
